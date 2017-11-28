@@ -185,7 +185,7 @@ array_walk( $wikiVersions, function ( &$ver ) {
 } );
 $group0 = dbList( 'group0' );
 $group1 = dbList( 'group1' );
-$group2 = array_diff( array_keys( $wikiVersions ), $group0, $group1 );
+$group2 = array_values( array_diff( array_keys( $wikiVersions ), $group0, $group1 ) );
 
 showGroup( 'Group 0', $group0, $wikiVersions[$group0[0]] );
 showGroup( 'Group 1', $group1, $wikiVersions[$group1[0]] );
