@@ -98,7 +98,7 @@ function confFile( $file ) {
  */
 function dbList( $list ) {
     $list = basename( $list, '.dblist' );
-    $lines = explode( "\n", confFile( "{$list}.dblist" ) );
+    $lines = explode( "\n", confFile( "dblists/{$list}.dblist" ) );
     $dbs = array();
     foreach ( $lines as $line ) {
         $line = trim( substr( $line, 0, strcspn( $line, '#' ) ) );
