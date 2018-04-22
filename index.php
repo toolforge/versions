@@ -145,20 +145,44 @@ function hsc( $str ) {
 }
 
 /**
+ * @param array $arr Source array
+ * @param array $keys List of keys to select
+ * @return array
+ */
+function valuesForKeys( $arr, $keys ) {
+	$ret = [];
+	foreach( $keys as $key ) {
+		if ( array_key_exists( $key, $arr ) ) {
+			$ret[$key] = $arr[$key];
+		}
+	}
+	return $ret;
+}
+
+/**
+ * @param array $versions
+ * @param array $wikis
+ * @return array
+ */
+function versions( $versions, $wikis ) {
+	return array_unique( valuesForKeys( $versions, $wikis ) );
+}
+
+/**
  * Render HTML for a wiki group.
  *
  * @param string $label Group label (e.g. "Group 0")
  * @param array $wikis
- * @param string $version MediaWiki version
+ * @param string $version MediaWiki versions
  */
-function showGroup( $label, $wikis, $version ) {
+function showGroup( $label, $wikis, $versions ) {
     $id = strtolower( preg_replace( '/\W/', '-', $label ) );
 ?>
 <div class="group <?= hsc( $id ) ?>">
 <h2><?= hsc( $label ) ?></h2>
 <div class="version">
 <input type="checkbox" id="<?= hsc( $id ) ?>">
-<label for="<?= hsc( $id ) ?>"><?= hsc( $version ) ?></label>
+<label for="<?= hsc( $id ) ?>"><?= hsc( implode( ' / ', $versions ) ) ?></label>
 <ul class="wikis">
 <?php foreach( $wikis as $wiki ) { ?>
 <li><a id="<?= hsc( $wiki ) ?>"><?= hsc( $wiki ) ?></a></li>
@@ -187,9 +211,9 @@ $group0 = dbList( 'group0' );
 $group1 = dbList( 'group1' );
 $group2 = array_values( array_diff( array_keys( $wikiVersions ), $group0, $group1 ) );
 
-showGroup( 'Group 0', $group0, $wikiVersions[$group0[0]] );
-showGroup( 'Group 1', $group1, $wikiVersions[$group1[0]] );
-showGroup( 'Group 2', $group2, $wikiVersions[$group2[0]] );
+showGroup( 'Group 0', $group0, versions( $wikiVersions, $group0 ) );
+showGroup( 'Group 1', $group1, versions( $wikiVersions, $group1 ) );
+showGroup( 'Group 2', $group2, versions( $wikiVersions, $group2 ) );
 ?>
 </section>
 <section id="sal">
