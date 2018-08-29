@@ -87,7 +87,9 @@ footer {clear:both;margin-top:2em;padding-top:1em;border-top:1px solid #333;text
  * @return string File contents
  */
 function confFile( $file ) {
-    return file_get_contents( "https://noc.wikimedia.org/conf/{$file}" );
+    // Add a cache-busting parameter (T202734)
+    $time = time();
+    return file_get_contents( "https://noc.wikimedia.org/conf/{$file}?t={$time}" );
 }
 
 /**
