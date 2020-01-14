@@ -1,7 +1,7 @@
 Wikimedia MediaWiki Versions
 ============================
 
-Display the active MediaWiki version on Wikimedia wikis based on the contents
+Display the active MediaWiki version for Wikimedia wikis based on the contents
 of https://noc.wikimedia.org/conf/.
 
 License
