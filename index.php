@@ -236,8 +236,8 @@ foreach ( getSal() as $hit ) {
 <section id="links">
 <ul>
 <li><a href="https://wikitech.wikimedia.org/wiki/Deployments#Near-term">Deployments calendar</a></li>
-<li><a href="https://www.mediawiki.org/wiki/Deployment_Train">Roadmap</a></li>
-<li><a href="https://tools.wmflabs.org/sal/production">Server Admin Log</a></li>
+<li><a href="https://www.mediawiki.org/wiki/Roadmap">Roadmap</a></li>
+<li><a href="https://sal.toolforge.org/production">Server Admin Log</a></li>
 </ul>
 </section>
 <section>
