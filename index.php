@@ -199,7 +199,7 @@ function showGroup( $label, $wikis, $versions ) {
  * @return array
  */
 function getSal() {
-    $resp = json_decode( file_get_contents( 'http://elasticsearch.svc.tools.eqiad1.wikimedia.cloud/sal/sal/_search?q=project:production&_source_include=@timestamp,project,nick,message&sort=@timestamp:desc' ) );
+    $resp = json_decode( file_get_contents( 'http://elasticsearch.svc.tools.eqiad1.wikimedia.cloud/sal/_search?q=project:production&_source_includes=@timestamp,project,nick,message&sort=@timestamp:desc' ) );
     return $resp->hits->hits;
 }
 
