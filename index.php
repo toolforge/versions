@@ -60,7 +60,7 @@ h1 {color:#484848;font-size:2em;padding:.5em;text-align:center;}
 .sal span {display:inline-block;}
 .sal .day, .sal .time, .sal.nick {white-space:nowrap;}
 .nick {color:#666;}
-.log {padding-left:1em;}
+.log {padding-left:1em;word-wrap:break-word;}
 #about {margin-top:2em;}
 footer {clear:both;margin-top:2em;padding-top:1em;border-top:1px solid #333;text-align:right;}
 #powered-by {float:left;}
