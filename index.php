@@ -43,6 +43,7 @@ h1 {color:#484848;font-size:2em;padding:.5em;text-align:center;}
 .group-0 h2 {background:#900}
 .group-1 h2 {background:#069}
 .group-2 h2 {background:#396}
+.group h3 {background: #888;padding: 0.5em;text-align: center;color: white;font-family: sans-serif;font-size: small;font-weight: 900;}
 .version label {cursor:pointer;display:block;font-size:1.5em;padding:.5em;text-align:center;}
 .version label:after {font-size:.5em;font-weight:normal;font-style:normal;display:inline-block;text-decoration:inherit;padding-left:1ch;}
 .version > input ~ ul {display:none;}
@@ -175,11 +176,13 @@ function versions( $versions, $wikis ) {
  * @param array $wikis
  * @param string $version MediaWiki versions
  */
-function showGroup( $label, $wikis, $versions ) {
+function showGroup( $label, $wikis, $versions, $total ) {
     $id = strtolower( preg_replace( '/\W/', '-', $label ) );
+    $len = count( $wikis );
 ?>
 <div class="group <?= hsc( $id ) ?>">
 <h2><?= hsc( $label ) ?></h2>
+<h3> <?= $len ?> Wikis &mdash; <?= (int) round($len / $total * 100) ?>% </h3>
 <div class="version">
 <input type="checkbox" id="<?= hsc( $id ) ?>">
 <label for="<?= hsc( $id ) ?>"><?= hsc( implode( ' / ', $versions ) ) ?></label>
@@ -210,10 +213,11 @@ array_walk( $wikiVersions, function ( &$ver ) {
 $group0 = dbList( 'group0' );
 $group1 = dbList( 'group1' );
 $group2 = array_values( array_diff( array_keys( $wikiVersions ), $group0, $group1 ) );
+$total = count( $group0 ) + count( $group1 ) + count( $group2 );
 
-showGroup( 'Group 0', $group0, versions( $wikiVersions, $group0 ) );
-showGroup( 'Group 1', $group1, versions( $wikiVersions, $group1 ) );
-showGroup( 'Group 2', $group2, versions( $wikiVersions, $group2 ) );
+showGroup( 'Group 0', $group0, versions( $wikiVersions, $group0 ), $total );
+showGroup( 'Group 1', $group1, versions( $wikiVersions, $group1 ), $total );
+showGroup( 'Group 2', $group2, versions( $wikiVersions, $group2 ), $total );
 ?>
 </section>
 <section id="sal">
@@ -242,7 +246,7 @@ foreach ( getSal() as $hit ) {
 </ul>
 </section>
 <section>
-<p id="about">Version information read from live configuration files hosted on <a href="https://noc.wikimedia.org/conf/">noc.wikimedia.org</a>.</p>
+<p id="about">Version information for all <?= $total ?> wikis read from live configuration files hosted on <a href="https://noc.wikimedia.org/conf/">noc.wikimedia.org</a>.</p>
 </section>
 <footer>
 <div id="powered-by">
