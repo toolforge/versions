@@ -252,7 +252,7 @@ foreach ( getSal() as $hit ) {
 <div id="powered-by">
 <a href="/"><img src="https://tools-static.wmflabs.org/toolforge/banners/Powered-by-Toolforge.png" alt="Powered by Wikimedia Toolforge"></a>
 </div>
-<a id="source" href="https://phabricator.wikimedia.org/source/tool-versions/">view source</a>
+<a id="source" href="https://gitlab.wikimedia.org/toolforge-repos/versions">view source</a>
 </footer>
 </body>
 </html>
