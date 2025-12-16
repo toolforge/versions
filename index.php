@@ -88,7 +88,15 @@ footer {clear:both;margin-top:2em;padding-top:1em;border-top:1px solid #333;text
  * @return string File contents
  */
 function confFile( $file ) {
-    return file_get_contents( "https://noc.wikimedia.org/conf/{$file}" );
+    return file_get_contents(
+        "https://noc.wikimedia.org/conf/{$file}",
+        false,
+        stream_context_create( [
+            'http' => [
+                'header' => 'user-agent: toolforge-versions',
+            ],
+        ] )
+    );
 }
 
 /**
