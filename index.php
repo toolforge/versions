@@ -40,6 +40,7 @@ h1 {color:#484848;font-size:2em;padding:.5em;text-align:center;}
 #groups {overflow:auto;}
 .group {border:2px solid #666;margin-bottom:1em;}
 .group h2 {color:#fefefe;font-size:2em;padding:.5em;text-align:center;}
+.testwikis h2 {background: #BBB}
 .group-0 h2 {background:#900}
 .group-1 h2 {background:#069}
 .group-2 h2 {background:#396}
@@ -67,7 +68,7 @@ footer {clear:both;margin-top:2em;padding-top:1em;border-top:1px solid #333;text
 #powered-by {float:left;}
 @media only screen and (min-width: 768px) {
   body {padding:2em;}
-  .group {width:30%;margin:0 1%;float:left;}
+  .group {width:22%;margin:0 1%;float:left;}
   #links li {display:inline-block;width:33%;text-align:center;}
   .sal {display:table;}
   .sal li {display:table-row;}
@@ -222,11 +223,13 @@ $wikiVersions = json_decode( confFile( 'wikiversions.json' ), true );
 array_walk( $wikiVersions, function ( &$ver ) {
     $ver = substr( $ver, 4 );
 } );
-$group0 = dbList( 'group0' );
-$group1 = dbList( 'group1' );
-$group2 = array_values( array_diff( array_keys( $wikiVersions ), $group0, $group1 ) );
+$testWikis = dbList( 'testwikis' );
+$group0 = array_values( array_diff( dbList( 'group0' ), $testWikis ) );
+$group1 = array_values( array_diff( dbList( 'group1' ), $testWikis ) );
+$group2 = array_values( array_diff( array_keys( $wikiVersions ), $group0, $group1, $testWikis ) );
 $total = count( $group0 ) + count( $group1 ) + count( $group2 );
 
+showGroup( 'testwikis', $testWikis, versions( $wikiVersions, $testWikis ) , $total );
 showGroup( 'Group 0', $group0, versions( $wikiVersions, $group0 ), $total );
 showGroup( 'Group 1', $group1, versions( $wikiVersions, $group1 ), $total );
 showGroup( 'Group 2', $group2, versions( $wikiVersions, $group2 ), $total );
