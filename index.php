@@ -210,7 +210,11 @@ function showGroup( $label, $wikis, $versions, $total ) {
  * @return array
  */
 function getSal() {
-    $resp = json_decode( file_get_contents( 'http://elasticsearch.svc.tools.eqiad1.wikimedia.cloud/sal/_search?q=project:production&_source_includes=@timestamp,project,nick,message&sort=@timestamp:desc' ) );
+    $sal = @file_get_contents( 'http://elasticsearch.svc.tools.eqiad1.wikimedia.cloud/sal/_search?q=project:production&_source_includes=@timestamp,project,nick,message&sort=@timestamp:desc' );
+    if ( $sal === false ) {
+        throw new ErrorException( error_get_last()['message'] );
+    }
+    $resp = json_decode( $sal );
     return $resp->hits->hits;
 }
 
@@ -231,14 +235,24 @@ showGroup( 'Group 2', $group2, versions( $wikiVersions, $group2 ), $total );
 <section id="sal">
 <ul class="sal">
 <?php
-foreach ( getSal() as $hit ) {
-    $date = new DateTime( $hit->_source->{'@timestamp'} );
+try {
+	foreach ( getSal() as $hit ) {
+		$date = new DateTime( $hit->_source->{'@timestamp'} );
 ?>
 <li>
 <span class="day"><?= $date->format( 'Y-m-d' ); ?></span>
 <span class="time"><?= $date->format( 'H:i' ); ?></span>
 <span class="nick">&lt;<?= hsc( $hit->_source->nick ); ?>&gt;</span>
 <span class="log"><?= hsc( $hit->_source->message ); ?></span>
+</li>
+<?php
+	}
+} catch ( ErrorException $e ) {
+?>
+<li>
+<span>
+Error retrieving <a href="https://sal.toolforge.org/production">Server Admin Log</a>.
+</span>
 </li>
 <?php
 }
