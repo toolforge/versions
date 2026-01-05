@@ -227,7 +227,7 @@ $testWikis = dbList( 'testwikis' );
 $group0 = array_values( array_diff( dbList( 'group0' ), $testWikis ) );
 $group1 = array_values( array_diff( dbList( 'group1' ), $testWikis ) );
 $group2 = array_values( array_diff( array_keys( $wikiVersions ), $group0, $group1, $testWikis ) );
-$total = count( $group0 ) + count( $group1 ) + count( $group2 );
+$total = count( $testWikis ) + count( $group0 ) + count( $group1 ) + count( $group2 );
 
 showGroup( 'testwikis', $testWikis, versions( $wikiVersions, $testWikis ) , $total );
 showGroup( 'Group 0', $group0, versions( $wikiVersions, $group0 ), $total );
