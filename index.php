@@ -109,7 +109,7 @@ function confFile( $file ) {
 function dbList( $list ) {
     $list = basename( $list, '.dblist' );
     $lines = explode( "\n", confFile( "dblists/{$list}.dblist" ) );
-    $dbs = array();
+    $dbs = [];
     foreach ( $lines as $line ) {
         $line = trim( substr( $line, 0, strcspn( $line, '#' ) ) );
         if ( substr( $line, 0, 2 ) === '%%' ) {
@@ -132,6 +132,7 @@ function evalDbList( $expr ) {
     $expr = trim( strtok( $expr, "#\n" ), '% ' );
     $term = strtok( $expr, ' ' );
     $result = dbList( $term );
+    // phpcs:ignore MediaWiki.ControlStructures.AssignmentInControlStructures.AssignmentInControlStructures
     while ( $op = strtok( ' ' ) ) {
         $part = dbList( strtok( ' ' ) );
         if ( $op === '+' ) {
@@ -160,13 +161,13 @@ function hsc( $str ) {
  * @return array
  */
 function valuesForKeys( $arr, $keys ) {
-	$ret = [];
-	foreach( $keys as $key ) {
-		if ( array_key_exists( $key, $arr ) ) {
-			$ret[$key] = $arr[$key];
-		}
-	}
-	return $ret;
+    $ret = [];
+    foreach ( $keys as $key ) {
+        if ( array_key_exists( $key, $arr ) ) {
+            $ret[$key] = $arr[$key];
+        }
+    }
+    return $ret;
 }
 
 /**
@@ -175,7 +176,7 @@ function valuesForKeys( $arr, $keys ) {
  * @return array
  */
 function versions( $versions, $wikis ) {
-	return array_unique( valuesForKeys( $versions, $wikis ) );
+    return array_unique( valuesForKeys( $versions, $wikis ) );
 }
 
 /**
@@ -183,7 +184,8 @@ function versions( $versions, $wikis ) {
  *
  * @param string $label Group label (e.g. "Group 0")
  * @param array $wikis
- * @param string $version MediaWiki versions
+ * @param string $versions MediaWiki versions
+ * @param int $total Number of wikis in this group label
  */
 function showGroup( $label, $wikis, $versions, $total ) {
     $id = strtolower( preg_replace( '/\W/', '-', $label ) );
@@ -191,12 +193,12 @@ function showGroup( $label, $wikis, $versions, $total ) {
 ?>
 <div class="group <?= hsc( $id ) ?>">
 <h2><?= hsc( $label ) ?></h2>
-<h3> <?= $len ?> Wikis &mdash; <?= (int) round($len / $total * 100) ?>% </h3>
+<h3> <?= $len ?> Wikis &mdash; <?= (int)round( $len / $total * 100 ) ?>% </h3>
 <div class="version">
 <input type="checkbox" id="<?= hsc( $id ) ?>">
 <label for="<?= hsc( $id ) ?>"><?= hsc( implode( ' / ', $versions ) ) ?></label>
 <ul class="wikis">
-<?php foreach( $wikis as $wiki ) { ?>
+<?php foreach ( $wikis as $wiki ) { ?>
 <li><a id="<?= hsc( $wiki ) ?>"><?= hsc( $wiki ) ?></a></li>
 <?php } ?>
 </ul>
@@ -220,6 +222,7 @@ function getSal() {
 }
 
 $wikiVersions = json_decode( confFile( 'wikiversions.json' ), true );
+// phpcs:ignore MediaWiki.Usage.StaticClosure.StaticClosure
 array_walk( $wikiVersions, function ( &$ver ) {
     $ver = substr( $ver, 4 );
 } );

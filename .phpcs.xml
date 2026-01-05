@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<ruleset>
+	<rule ref="./vendor/mediawiki/mediawiki-codesniffer/MediaWiki">
+		<exclude name="Generic.Files.LineLength.TooLong" />
+		<exclude name="Generic.PHP.CharacterBeforePHPOpeningTag.Found" />
+		<exclude name="Generic.PHP.DisallowShortOpenTag.EchoFound" />
+		<exclude name="Generic.WhiteSpace.DisallowSpaceIndent" />
+		<exclude name="MediaWiki.NamingConventions.PrefixedGlobalFunctions.allowedPrefix" />
+		<exclude name="MediaWiki.WhiteSpace.SpaceBeforeSingleLineComment.NewLineComment" />
+	</rule>
+	<rule ref="Generic.WhiteSpace.DisallowTabIndent" />
+	<rule ref="Generic.WhiteSpace.ScopeIndent">
+		<properties>
+			<property name="indent" value="4" />
+			<property name="tabIndent" value="false" />
+			<!-- Allow php tags at the very start of lines -->
+			<property name="ignoreIndentationTokens" type="array">
+				<element value="T_OPEN_TAG" />
+				<element value="T_CLOSE_TAG" />
+			</property>
+		</properties>
+	</rule>
+	<file>.</file>
+	<arg name="extensions" value="php"/>
+	<arg name="encoding" value="UTF-8"/>
+</ruleset>
