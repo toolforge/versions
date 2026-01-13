@@ -40,7 +40,7 @@ h1 {color:#484848;font-size:2em;padding:.5em;text-align:center;}
 #groups {overflow:auto;}
 .group {border:2px solid #666;margin-bottom:1em;}
 .group h2 {color:#fefefe;font-size:2em;padding:.5em;text-align:center;}
-.testwikis h2 {background: #BBB}
+.testwikis h2 {background:#ccc;color:#333;}
 .group-0 h2 {background:#900}
 .group-1 h2 {background:#069}
 .group-2 h2 {background:#396}
