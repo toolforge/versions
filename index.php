@@ -191,7 +191,7 @@ function showGroup( $label, $wikis, $versions, $total ) {
 ?>
 <div class="group <?= hsc( $id ) ?>">
 <h2><?= hsc( $label ) ?></h2>
-<h3> <?= $len ?> Wikis &mdash; <?= (int) round($len / $total * 100) ?>% </h3>
+<h3> <?= $len ?> Wikis &mdash; <?= round($len / $total * 100, 2) ?>% </h3>
 <div class="version">
 <input type="checkbox" id="<?= hsc( $id ) ?>">
 <label for="<?= hsc( $id ) ?>"><?= hsc( implode( ' / ', $versions ) ) ?></label>
